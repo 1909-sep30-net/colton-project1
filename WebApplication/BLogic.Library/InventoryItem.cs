@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WebApplication.BusinessLogic.Library;
+using WebApplication.BLogic.Library;
 
-namespace WebApplication.BusinessLogic.Library
+namespace WebApplication.BLogic.Library
 {
     public class InventoryItem
     {

@@ -4,8 +4,8 @@ using System.Linq;
 using WebApplication.Data;
 using NLog;
 using Microsoft.EntityFrameworkCore;
-using BusinessLogic.Library.Interfaces;
-using BusinessLogic.Library;
+using WebApplication.BLogic.Library;
+
 
 
 namespace WebApplication.Data
@@ -36,12 +36,12 @@ namespace WebApplication.Data
         //    }
         //    return items.Select(Mapper.MapLocation);
         //}
-        public BusinessLogic.Library.Location GetLocationById(int id) =>
+        public BLogic.Library.Location GetLocationById(int id) =>
             Mapper.MapLocation(_dbContext.Location.Find(id));
 
 
 
-        public void AddCustomer(BusinessLogic.Library.Customer customer)
+        public void AddCustomer(WebApplication.BLogic.Library.Customer customer)
         {
             _dbContext.Customer.Add(Mapper.MapCustomer(customer));
         }
@@ -53,7 +53,7 @@ namespace WebApplication.Data
         //        .Where(r => r.FirstName.Contains(FirstName))
         //        .Select(Mapper.MapCustomer);
         //}
-        public List<Order> GetOrderHistory(int search)
+        public List<WebApplication.BLogic.Library.Order> GetOrderHistory(int search)
         {
             return _dbContext.Orders
                  .Include(o => o.Customer)
@@ -64,7 +64,7 @@ namespace WebApplication.Data
                  .Select(Mapper.MapOrders).ToList();
         }
 
-        public List<BusinessLogic.Library.Customer> GetCustomerByName(string search = null)
+        public List<BLogic.Library.Customer> GetCustomerByName(string search = null)
         {
 
             return _dbContext.Customer
@@ -72,13 +72,13 @@ namespace WebApplication.Data
                 .Where(r => r.FirstName.Contains(search))
                 .Select(Mapper.MapCustomer).ToList();
         }
-        public List<BusinessLogic.Library.Location> GetAllLocations()
+        public List<BLogic.Library.Location> GetAllLocations()
         {
             return _dbContext.Location
                 .Select(Mapper.MapLocation).ToList();
 
         }
-        public List<BusinessLogic.Library.Customer> GetAllCustomers()
+        public List<BLogic.Library.Customer> GetAllCustomers()
         {
             return _dbContext.Customer
                     .Select(Mapper.MapCustomer).ToList();
@@ -97,26 +97,26 @@ namespace WebApplication.Data
 
 
         }
-        public List<BusinessLogic.Library.Product> GetProducts()
+        public List<BLogic.Library.Product> GetProducts()
         {
             return _dbContext.Product
                 .Select(Mapper.MapProduct).ToList();
 
         }
-        public List<BusinessLogic.Library.Customer> GetCustomer(string FirstName, string LastName)
+        public List<BLogic.Library.Customer> GetCustomer(string FirstName, string LastName)
         {
             return _dbContext.Customer
                 .Where(o => o.FirstName == FirstName && o.LastName == LastName)
                 .Select(Mapper.MapCustomer).ToList();
         }
-        public Dictionary<BusinessLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
+        public Dictionary<BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
         {
             using var context = GetContext();
             List<Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
-            Dictionary<BusinessLogic.Library.Product, int> keyValuePairs = new Dictionary<BusinessLogic.Library.Product, int>();
+            Dictionary<BLogic.Library.Product, int> keyValuePairs = new Dictionary<BLogic.Library.Product, int>();
             foreach (Inventory item in getInventory)
             {
-                keyValuePairs.Add(new BusinessLogic.Library.Product() { Name = context.Product.Single(p => p.Id == item.ProductId).Name, Price = context.Product.Single(p => p.Id == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
+                keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Product.Single(p => p.Id == item.ProductId).Name, Price = context.Product.Single(p => p.Id == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
             }
             return keyValuePairs;
 

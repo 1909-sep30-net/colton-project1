@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebApplication.BusinessLogic.Library
+namespace WebApplication.BLogic.Library
 {
     public class GuidService
     {

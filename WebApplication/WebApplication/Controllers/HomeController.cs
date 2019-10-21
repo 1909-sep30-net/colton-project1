@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Models;
-using BusinessLogic.Library;
+using WebApplication.BLogic.Library;
 
 namespace WebApplication.Controllers
 {

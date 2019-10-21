@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace WebApplication.BusinessLogic.Library
+namespace WebApplication.BLogic.Library
 {
     /// <summary>
     /// A class of customers with first and last names and Id's

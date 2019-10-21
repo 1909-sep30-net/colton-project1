@@ -11,11 +11,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="NLog" Version="4.6.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic.Library\BusinessLogic.Library.csproj" />
+    <ProjectReference Include="..\BLogic.Library\BLogic.Library.csproj" />
     <ProjectReference Include="..\WebApplication.Data\WebApplication.Data.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap_1min_1css_1map__JsonSchema="" wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap-reboot_1css_1map__JsonSchema="http://json.schemastore.org/typewiz" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace WebApplication.BusinessLogic.Library
+namespace WebApplication.BLogic.Library
 {
     public interface IStoreRepository : IDisposable
     {
@@ -13,7 +13,7 @@ namespace WebApplication.BusinessLogic.Library
 
         void AddOrder(Order order);
         List<Order> GetOrderHistory(int search);
-        Dictionary<BusinessLogic.Library.Product, int> GetInventoryByStoreId(int Id);
+        Dictionary<BLogic.Library.Product, int> GetInventoryByStoreId(int Id);
         //Order GetOrderById(int Id);
 
         //void AddLocation(Location location);
@@ -28,7 +28,7 @@ namespace WebApplication.BusinessLogic.Library
 
         //Customer GetCustomerById(int Id);
 
-        List<BusinessLogic.Library.Customer> GetCustomer(string FirstName, string LastName);
+        List<BLogic.Library.Customer> GetCustomer(string FirstName, string LastName);
         List<Customer> GetCustomerByName(string name);
         void UpdateInventory(InventoryItem inventoryItem);
 

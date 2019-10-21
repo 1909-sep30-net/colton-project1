@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using StoreApplication.DataAccess;
-using BusinessLogic.Library;
+using WebApplication.Data;
+using WebApplication.BLogic.Library;
 
 namespace WebApplication.Data
 { 

@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Data;
-using BusinessLogic.Library;
-using BusinessLogic.Library.Interfaces;
+using WebApplication.BLogic.Library;
+//using BLogic.Library.Interfaces; 
 
 
 namespace WebApplication

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using lib = BusinessLogic.Library;
+using lib = WebApplication.BLogic.Library;
 using Ent = WebApplication.Data;
 
 namespace WebApplication.Data
