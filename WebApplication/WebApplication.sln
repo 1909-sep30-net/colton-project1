@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Data", "WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLogic.Library", "BLogic.Library\BLogic.Library.csproj", "{8435C274-CC17-4CB6-90DD-77BFE49D1939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.DataAccess", "WebApplication.DataAccess\WebApplication.DataAccess.csproj", "{A3D356EC-D2FF-4795-BFA3-E0DE469A15FA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{8435C274-CC17-4CB6-90DD-77BFE49D1939}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8435C274-CC17-4CB6-90DD-77BFE49D1939}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8435C274-CC17-4CB6-90DD-77BFE49D1939}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3D356EC-D2FF-4795-BFA3-E0DE469A15FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3D356EC-D2FF-4795-BFA3-E0DE469A15FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3D356EC-D2FF-4795-BFA3-E0DE469A15FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3D356EC-D2FF-4795-BFA3-E0DE469A15FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
