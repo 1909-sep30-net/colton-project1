@@ -15,6 +15,8 @@ namespace WebApplication.Data
         public string Name { get; set; }
         public double Price { get; set; }
 
+        public int ProductId { get; set; }
+
         public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }

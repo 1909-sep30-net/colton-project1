@@ -11,6 +11,8 @@ namespace WebApplication.BLogic.Library
         private string _fname;
         private string _lname;
         public int Id { get; set; }
+        public string Name { get => FirstName + " " + LastName; }
+
 
 
         public string FirstName
