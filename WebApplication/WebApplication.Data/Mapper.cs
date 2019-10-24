@@ -9,6 +9,74 @@ namespace WebApplication.Data
 {
     class Mapper
     {
+        //public static BLogic.Library.Location MapStore(Data.Location stores)
+
+        //{
+
+        //    return new BLogic.Library.Location
+
+        //    {
+
+        //        Id = stores.Id,
+
+        //        Address = stores.Address
+
+        //    };
+        //}
+
+        //internal static lib.Location MapStore(object p)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public static Ent.Location MapDbStores(lib.Location store)
+
+        //{
+
+        //    return new Data.Location
+
+        //    {
+
+        //        Id = store.Id,
+                
+        //        Address = store.Address
+        //    };
+
+        //}
+        //public static lib.Product MapProduct(Data.Product products)
+        //{
+        //    return new lib.Product
+
+        //    {
+
+        //        Name = products.Name,
+
+        //        Price = products.Price,
+
+        //        Id = products.Id
+
+
+        //    };
+        //}
+        //public static Data.Product MapDbProduct(lib.Product product)
+        //{
+
+        //    return new Data.Product
+
+        //    {
+
+        //        Name = product.Name,
+
+        //        Price = product.Price,
+
+        //        Id = product.Id
+
+
+        //    };
+
+        //}
+
+
         public static lib.Customer MapCustomer(Ent.Customer customer)
         {
             return new lib.Customer
