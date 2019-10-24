@@ -58,7 +58,7 @@ steps:
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(2e66b483-5399-4849-af0d-65ba12e5f517)'
+    azureSubscription: 'Free Trial(1)(2e66b483-5399-4849-af0d-65ba12e5f517)'
     appType: 'webApp'
-    WebAppName: 'jacob1'
+    WebAppName: 'colton-project1'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
