@@ -9,7 +9,7 @@ using WebApplication.BLogic.Library;
 
 namespace WebApplication.Data
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private Project1Context context;
         public static Project1Context GetContext()

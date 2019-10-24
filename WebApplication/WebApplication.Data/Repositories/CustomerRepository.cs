@@ -77,24 +77,37 @@ namespace WebApplication.Data
 
         }
 
-        public Dictionary<WebApplication.BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
+        //public Dictionary<WebApplication.BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
+        //{
+        //    using var context = GetContext();
+        //    List<Data.Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
+        //    Dictionary<BL.Product, int> ItemList = new Dictionary<BL.Product, int>();
+        //    foreach (Data.Inventory item in getInventory)
+        //    {
+        //        ItemList.Add(new BL.Product()
+        //        {
+        //            Id = item.ProductId,
+        //            Name = context.Product.Single(p => p.Id == item.ProductID).Name,
+        //            Price = context.Product.Single(p => p.Id == item.ProductID).Price,
+
+
+
+        //        },
+        //            (int)item.Quantity);
+        //    }
+        //    return ItemList;
+        //}
+        public Dictionary<BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
         {
             using var context = GetContext();
-            List<Data.Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
-            Dictionary<BL.Product, int> ItemList = new Dictionary<BL.Product, int>();
-            foreach (Data.Inventory item in getInventory)
+            List<Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
+            Dictionary<BLogic.Library.Product, int> keyValuePairs = new Dictionary<BLogic.Library.Product, int>();
+            foreach (Inventory item in getInventory)
             {
-                ItemList.Add(new BL.Product()
-                {
-                    Id = item.ProductId,
-                    Name = context.Product.Single(p => p.Id == item.ProductId).Name,
-                    Price = context.Product.Single(p => p.Id == item.ProductId).Price,
-                    
-
-                },
-                    (int)item.Quantity);
+                keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Product.Single(p => p.Id == item.ProductId).Name, Price = context.Product.Single(p => p.Id == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
             }
-            return ItemList;
+            return keyValuePairs;
+
         }
 
         public void AddNewOrder(WebApplication.BLogic.Library.Order _ord)

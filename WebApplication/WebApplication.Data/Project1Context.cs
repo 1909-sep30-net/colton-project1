@@ -36,7 +36,7 @@ namespace WebApplication.Data
         {
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id);//.HasColumnName("ID");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
@@ -49,24 +49,35 @@ namespace WebApplication.Data
 
             modelBuilder.Entity<Inventory>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.LocationId })
-                    .HasName("PK__Inventor__DA732CAA35F81D75");
+                //entity.HasKey(e => new { e.ProductId, e.LocationId })
+                //    .HasName("PK__Inventor__DA732CAA35F81D75");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+                //entity.Property(e => e.ProductId);//.HasColumnName("ProductID");
 
-                entity.Property(e => e.LocationId).HasColumnName("LocationID");
+                //entity.Property(e => e.LocationId);//.HasColumnName("LocationID");
+
+                //entity.HasOne(d => d.Location)
+                //    .WithMany(p => p.Inventory)
+                //    .HasForeignKey(d => d.LocationId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__Inventory__Locat__1332DBDC");
+
+                //entity.HasOne(d => d.Product)
+                //    .WithMany(p => p.Inventory)
+                //    .HasForeignKey(d => d.ProductId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__Inventory__Produ__123EB7A3");
+                entity.HasOne(d => d.Product)
+    .WithMany(p => p.Inventory)
+    .HasForeignKey(d => d.ProductId)
+    .OnDelete(DeleteBehavior.Cascade)
+    .HasConstraintName("FK__Inventory__Produ__693CA210");
 
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.LocationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Inventory__Locat__1332DBDC");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.Inventory)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Inventory__Produ__123EB7A3");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK__Inventory__Store__6A30C649");
             });
 
             modelBuilder.Entity<Location>(entity =>
