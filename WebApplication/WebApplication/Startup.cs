@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Data;
 using WebApplication.BLogic.Library;
-//using BLogic.Library.Interfaces; 
+using BLogic.Library.Interfaces; 
 
 
 namespace WebApplication
@@ -38,11 +38,11 @@ namespace WebApplication
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddScoped<ICustomerRepo, CustomerRepository>();
+
             services.AddScoped<IStoreRepository, StoreRepository>();
 
-            services.AddSingleton<SingletonGuidService>();
-            services.AddScoped<ScopedGuidService>();
-            services.AddTransient<TransientGuidService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddControllersWithViews(config =>
             {
