@@ -25,11 +25,11 @@ steps:
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-  workingDirectory: ./RestaurantReviews
+  workingDirectory: ./WebApplication
 
-# - script: dotnet test
-#   displayName: dotnet test
-#   workingDirectory: RestaurantReviews
+- script: dotnet test
+  displayName: dotnet test
+  workingDirectory: WebApplication
 
 # a task can encapsulate some useful logic so we don't have to
 # write it all out in script step...
@@ -39,7 +39,7 @@ steps:
   displayName: dotnet test
   inputs:
     command: 'test'
-    projects: './RestaurantReviews'
+    projects: './WebApplication'
     arguments: '-c $(buildConfiguration) --collect "XPlat Code Coverage"'
 
 - task: PublishCodeCoverageResults@1
