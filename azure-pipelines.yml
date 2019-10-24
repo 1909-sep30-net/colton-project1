@@ -56,10 +56,9 @@ steps:
     zipAfterPublish: true
 
 - task: AzureRmWebAppDeployment@4
-  displayName: App Service deploy
   inputs:
     ConnectionType: 'AzureRM'
-    azureSubscription: 'Pay-As-You-Go(0518cd5b-d389-4983-9496-cdcae31dcc60)'
+    azureSubscription: 'Free Trial(2e66b483-5399-4849-af0d-65ba12e5f517)'
     appType: 'webApp'
-    WebAppName: 'restreviews1909'
+    WebAppName: 'jacob1'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
