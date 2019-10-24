@@ -14,11 +14,11 @@ namespace WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly SingletonGuidService _singleton;
+        //private readonly SingletonGuidService _singleton;
 
-        private readonly ScopedGuidService _scoped;
+        //private readonly ScopedGuidService _scoped;
 
-        private readonly TransientGuidService _transient;
+        //private readonly TransientGuidService _transient;
 
         public HomeController(ILogger<HomeController> logger)
         {

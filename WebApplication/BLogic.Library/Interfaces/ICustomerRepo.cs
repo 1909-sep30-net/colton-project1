@@ -5,7 +5,7 @@ using BLogic.Library;
 
 namespace BLogic.Library.Interfaces
 {
-    interface ICustomerRepo
+    public interface ICustomerRepo
     {
         public void AddNewCustomer(WebApplication.BLogic.Library.Customer customer);
 

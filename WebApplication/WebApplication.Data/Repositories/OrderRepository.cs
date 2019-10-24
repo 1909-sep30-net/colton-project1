@@ -4,11 +4,12 @@ using System.Linq;
 using WebApplication.Data;
 using NLog;
 using Microsoft.EntityFrameworkCore;
+using BLogic.Library.Interfaces;
 using WebApplication.BLogic.Library;
 
 namespace WebApplication.Data
 {
-    class OrderRepository
+    class OrderRepository : IOrderRepository
     {
         private Project1Context context;
         public static Project1Context GetContext()

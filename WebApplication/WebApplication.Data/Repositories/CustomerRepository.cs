@@ -5,10 +5,13 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using  BL = WebApplication.BLogic.Library;
 using data = WebApplication.Data;
+using BLogic.Library.Interfaces;
+
 
 namespace WebApplication.Data
 {
-    class CustomerRepository
+    public class CustomerRepository : ICustomerRepo
+
     {
         private Project1Context context;
         public static Project1Context GetContext()
@@ -28,9 +31,9 @@ namespace WebApplication.Data
 
         }
 
-        public List<BL.Customer> GetCustomersByFirstName(string firstname)
+        public List<BLogic.Library.Customer> GetCustomerByFirstName(string firstname)
 
-                       => context.Customer.Select(Mapper.MapCustomer).Where(c => c.FirstName == firstname).ToList();
+              => context.Customer.Select(Mapper.MapCustomer).Where(c => c.FirstName == firstname).ToList();
 
 
 
@@ -41,6 +44,11 @@ namespace WebApplication.Data
             context.SaveChanges();
         }
 
+        public void AddNewCustomer()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<WebApplication.BLogic.Library.Customer> GetAllCustomers()
         {
             IQueryable<Data.Customer> customers = context .Customer
@@ -48,6 +56,10 @@ namespace WebApplication.Data
 
             return customers.Select(Mapper.MapCustomer).ToList();
 
+        }
+        public Customer GetCustomerByFirstName()
+        {
+            throw new NotImplementedException();
         }
 
         public List<BL.Order> GetOrdersByCustId(int custId)

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CustomerViewModel>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>Customers</h1>
+<p>
+    <a asp-action="Create">Make a new Customer</a>
+</p>
+<p>
+    <a asp-action="Search">Search a new Customer</a>
+</p>
+<table class="table">
+    <thead>
+           <tr>
+               <th>
+                   @Html.DisplayNameFor(model => model.Id)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.FirstName)
+
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.LastName)
+
+               </th>
+           </tr>
+        </thead
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Place Order", "PlaceOrder", new { id = item.Id})
+                    @Html.ActionLink("Order History", "CustomerOrders", "Orders", new { id =item.Id})
+                </td>
+            </tr>
+            }
+        </tbody>
+</table>
+
+@*<h4>Customers</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="(FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
