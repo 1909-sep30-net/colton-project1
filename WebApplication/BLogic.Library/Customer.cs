@@ -20,9 +20,9 @@ namespace WebApplication.BLogic.Library
             get => _fname;
             set
             {
-                if (value.Length == 0)
+                if (value.Length == 0 || value == null)
                 {
-                    throw new ArgumentException("First Name must not be empty", nameof(value));
+                    throw new ArgumentException("First Name must not be empty or null", nameof(value));
                 }
                 _fname = value;
             }
