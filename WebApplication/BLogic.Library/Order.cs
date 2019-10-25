@@ -10,10 +10,12 @@ namespace WebApplication.BLogic.Library
         public Location Location { get; set; }
         public Customer Customer { get; set; }
 
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         public int? LocationId { get; set; }
         public int? CustomerId { get; set; }
-        public DateTime? OrderDateTime { get; set; }
+        public DateTime OrderDateTime { get; set; }
+
+        public List<OrderDetails> ProductSelected = new List<OrderDetails>();
 
         public List<OrderDetails> OrderDetails { get; set; }
 

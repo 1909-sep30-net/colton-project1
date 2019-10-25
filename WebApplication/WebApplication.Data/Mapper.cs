@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using lib = WebApplication.BLogic.Library;
-using Ent = WebApplication.Data;
+using Ent = WebApplication.Data.Entitis;
 
 namespace WebApplication.Data
 {
@@ -38,7 +38,7 @@ namespace WebApplication.Data
         //    {
 
         //        Id = store.Id,
-                
+
         //        Address = store.Address
         //    };
 
@@ -77,21 +77,21 @@ namespace WebApplication.Data
         //}
 
 
-        public static lib.Customer MapCustomer(Ent.Customer customer)
+        public static lib.Customer MapCustomer(Ent.Customers customer)
         {
             return new lib.Customer
             {
-                Id = customer.Id,
+                Id = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
             };
         }
 
-        public static Ent.Customer MapCustomer(lib.Customer customer)
+        public static Ent.Customers MapCustomer(lib.Customer customer)
         {
-            return new Ent.Customer
+            return new Ent.Customers
             {
-                Id = customer.Id,
+                CustomerId = customer.Id,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
 
@@ -101,7 +101,7 @@ namespace WebApplication.Data
         {
             return new lib.Location
             {
-                Id = location.Id,
+                Id = location.LocationId,
                 Address = location.Address,
                 Inventory = location.Inventory.Select(Mapper.MapInventoryItem).ToList(),
                 OrderHistory = location.Orders.Select(Mapper.MapOrders).ToList()
@@ -114,7 +114,7 @@ namespace WebApplication.Data
         {
             return new Ent.Location
             {
-                Id = location.Id,
+                LocationId = location.Id,
                 Address = location.Address,
                 Inventory = location.Inventory.Select(Mapper.MapInventoryItem).ToList(),
                 Orders = location.OrderHistory.Select(Mapper.MapOrders).ToList(),
@@ -126,11 +126,11 @@ namespace WebApplication.Data
         {
             return new Ent.Orders
             {
-                Id = order.Id,
+                OrderId = order.Id,
                 LocationId = order.Location.Id,
-                CustomerId = order.CustomerId,
-                OrderDetails = order.OrderDetails.Select(Mapper.MapOrderDetails).ToList(),
-                OrderTime = order.OrderDateTime
+                CustomerId = order.Id,
+                OrderDetail = order.ProductSelected.Select(MapOrderDetails).ToList(),
+                OrderDateTime = order.OrderDateTime
 
 
 
@@ -141,11 +141,12 @@ namespace WebApplication.Data
         {
             return new lib.Order
             {
-                Id = order.Id,
-                CustomerId = order.CustomerId ?? throw new ArgumentException("Argument cannot be null", nameof(order)),
-                LocationId = order.LocationId ?? throw new ArgumentException("Argument cannot be null", nameof(order)),
-                OrderDetails = order.OrderDetails.Select(MapOrderDetails).ToList(),
-                OrderDateTime = order.OrderTime ?? throw new ArgumentException("Argument cannot be null", nameof(order))
+                Id = order.OrderId,
+                CustomerId = order.CustomerId,
+                LocationId = order.LocationId,
+                OrderDateTime = order.OrderDateTime,
+                Total = order.Total,
+                ProductSelected = order.OrderDetail.Select(MapOrderDetails).ToList()
             };
         }
         public static lib.InventoryItem MapInventoryItem(Ent.Inventory inventoryItem)
@@ -171,22 +172,23 @@ namespace WebApplication.Data
 
             };
         }
-        public static lib.OrderDetails MapOrderDetails(Ent.OrderDetails orderDetails)
+        public static lib.OrderDetails MapOrderDetails(Ent.OrderDetail orderDetails)
         {
             return new lib.OrderDetails
             {
-                Id = orderDetails.Order.Id,
-                Quantity = (int)orderDetails.Quantity,
-                Product = Mapper.MapProduct(orderDetails.Product)
+                OrderDetailId = orderDetails.Order.Id,
+                ProductQuantity = (int)orderDetails.Quantity,
+                ProductId = Mapper.MapProduct(orderDetails.Product)
             };
         }
-        public static Ent.OrderDetails MapOrderDetails(lib.OrderDetails orderDetails)
+        public static Ent.OrderDetail MapOrderDetails(lib.OrderDetails orderDetails)
         {
-            return new Ent.OrderDetails
+            return new Ent.OrderDetail
             {
-                OrderId = orderDetails.Id,
-                ProductId = orderDetails.Product.Id,
-                Quantity = orderDetails.Quantity
+                OrderId = orderDetails.OrderDetailId,
+                ProductId = orderDetails.ProductId,
+                ProductQuantity = orderDetails.ProductQuantity,
+                OrderDetailId = orderDetails.OrderDetailId
 
 
             };

@@ -6,10 +6,36 @@ namespace WebApplication.BLogic.Library
 {
     public class OrderDetails
     {
-        public int Id { get; set; }
-        //public int ProductId { get; set; }
-        public int Quantity { get; set; }
+        private int orderDetailId;
+        public int OrderDetailId
+        {
+            get => orderDetailId;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("Invalid Order Detail ID", nameof(value));
+                orderDetailId = value;
+            }
+        }
 
-        public Product Product { get; set; } = new Product();
+        public int ProductId;
+
+        public int OrderId;
+
+        private int productQuantity;
+
+        public int ProductQuantity
+        {
+            get => productQuantity;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Stock cannot be neg", nameof(value));
+                ProductQuantity = value;
+            }
+        }
+
+
+
     }
 }
