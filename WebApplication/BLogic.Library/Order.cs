@@ -10,7 +10,7 @@ namespace WebApplication.BLogic.Library
         public Location Location { get; set; }
         public Customer Customer { get; set; }
 
-        public decimal Total { get; set; }
+        public double Total { get; set; }
         public int LocationId { get; set; }
         public int CustomerId { get; set; }
 

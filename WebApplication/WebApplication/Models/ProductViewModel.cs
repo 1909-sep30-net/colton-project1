@@ -11,7 +11,7 @@ namespace WebApplication.Models
     {
         public string Name { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [DisplayName("Product ID")]
         public int ProductId { get; set; }

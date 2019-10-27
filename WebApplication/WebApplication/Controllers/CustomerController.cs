@@ -207,6 +207,7 @@ namespace WebApplication.Controllers
                 cart = new Dictionary<BLogic.Library.Product, int>()
 
             };
+            
             foreach (var item in order2.Inventory)
             {
                 if (item.ProductQuant != 0)
@@ -220,48 +221,57 @@ namespace WebApplication.Controllers
 
                     BLogic.Library.OrderDetails orderDet = new BLogic.Library.OrderDetails
                     {
-                        OrderDetailId = 0, 
+                        OrderDetailId = 0,
                         ProductId = item.ProductId,
                         ProductQuantity = item.ProductQuant
                     };
-
+                    //order.Total += (item.ProductQuant) * (item.Price);
                     order.ProductSelected.Add(orderDet);
-
-                    foreach(var invItem in inventoryBeforeChange)
-                    {
-                        if(invItem.Key.Id == item.ProductId)
-                        {
-                            instructions.Add(invItem.Key.Id, item.ProductQuant);
-                            break;
-                        }
-                    }
-
-                   //BLogic.Library.InventoryItem inv = new BLogic.Library.InventoryItem
-                   // {
-                   //     InventoryId = item.InventoryId,
-                   //     StoreId = order2.StoreId,
-                   //     ProductId = item.ProductId,
-                   //     Quantity = item.MaxQuant - item.ProductQuant
-                   // };
 
 
                     order.cart[product] = item.ProductQuant;
+                    foreach(var product2 in order.cart)
+                    {
+                        order.Total += (product2.Key.Price) * (product2.Value);
+                    }
                 }
-                //foreach (var instruction in instructions)
-                //{
-                //    _repository.UpdateInventory(order2.StoreId, instruction.Key, instruction.Value);
-                //    _repository.Save();
-                //}
+
 
             }
             _repository.UpdateInventory(order);
-            //_repository.AddNewOrder(order);
+           
             _repository.Save();
 
+            TempData["CustId"] = order.CustomerId;
+            TempData["LocationId"] = order.LocationId;
+            TempData["OrderId"] = order.Id;
+           
+            
+            //TempData["Total"] = order.Total;
 
 
-            return RedirectToAction(nameof(Index));
+            ThankYouViewModel thankYouViewModel = new ThankYouViewModel
+            {
+                CustomerId = order.CustomerId,
+                StoreId = order.LocationId,
+                OrderId = order.Id,
+                OrderDate = order.OrderDateTime,
+                Total = order.Total
+
+            };
+
+            return View(thankYouViewModel);
+            //return RedirectToAction(nameof(Index));//instead of redirecting to Index, we want a view that shows OrderDetails
         }
+        public ActionResult ThankYou(ThankYouViewModel thankYou)
+        {
+            thankYou.CustomerId = Convert.ToInt32(TempData["CustId"]);
+            thankYou.StoreId = Convert.ToInt32(TempData["LocationId"]);
+            thankYou.OrderId = Convert.ToInt32(TempData["OrderId"]);
+            thankYou.OrderDate = DateTime.Now;//Convert.ToDateTime(TempData["OrderDate"]);
+            //thankYou.Total = Convert.ToInt32(TempData["Total"]);
 
+            return View(thankYou);
+        }
     }
 }

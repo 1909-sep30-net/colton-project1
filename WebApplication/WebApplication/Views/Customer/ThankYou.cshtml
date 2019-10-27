@@ -1,0 +1,51 @@
+﻿@model ThankYouViewModel
+@{
+    ViewData["Title"] = "ThankYou";
+}
+
+<h1>ThankYou for Shopping!</h1>
+<form asp-action="ThankYou">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+            <td>@Html.DisplayFor(model => Model.CustomerId)</td>
+            <td>@Html.DisplayFor(model => Model.StoreId)</td>
+            <td>@Html.DisplayFor(model => Model.OrderId)</td>
+            <td>@Html.DisplayFor(model => Model.OrderDate)</td>
+            <td>@Html.DisplayFor(model => Model.Total)</td>
+
+
+        </tr>
+
+
+
+
+    </tbody>
+
+</table>
+<div class="form-group">
+    <input asp-action="ThankYou" type="submit" value="Submit Order" class="btn btn-primary" />
+</div>
+</form>

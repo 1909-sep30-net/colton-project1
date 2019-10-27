@@ -13,7 +13,7 @@ namespace WebApplication.Data.Entitis
         public int CustomerId { get; set; }
         public int OrderId { get; set; }
         public DateTime OrderDateTime { get; set; }
-        public decimal Total { get; set; }
+        public double Total { get; set; }
         public int LocationId { get; set; }
 
         public virtual Customers Customer { get; set; }

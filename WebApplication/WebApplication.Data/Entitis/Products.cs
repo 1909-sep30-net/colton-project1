@@ -13,7 +13,7 @@ namespace WebApplication.Data.Entitis
 
         public string Name { get; set; }
         public int ProductId { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

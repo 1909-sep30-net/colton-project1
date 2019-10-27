@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models
 {
-    public class OrderViewModel
+    public class ThankYouViewModel
     {
+        //shows What they bought and Total Cost
+
+
         [DisplayName("Customer ID")]
         [Required]
         public int CustomerId { get; set; }
@@ -25,8 +28,8 @@ namespace WebApplication.Models
         [DisplayName("Order Date")]
         public DateTime OrderDate { get; set; }
 
+        [Required]
+        [DisplayName("Total")]
         public double Total { get; set; }
-
-
     }
 }

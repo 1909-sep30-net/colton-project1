@@ -19,7 +19,7 @@ namespace WebApplication.Models
         [DisplayName("Order Date")]
         public DateTime OrderDate { get; set; }
 
-        public decimal Total { get; set; }
+        public double Total { get; set; }
 
         [DisplayName("Store ID")]
         public int StoreId { get; set; }
