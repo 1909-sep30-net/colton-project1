@@ -247,13 +247,15 @@ namespace WebApplication.Controllers
 
                     order.cart[product] = item.ProductQuant;
                 }
-                foreach (var instruction in instructions)
-                {
-                    _repository.UpdateInventory(order2.StoreId, instruction.Key, instruction.Value);
-                }
+                //foreach (var instruction in instructions)
+                //{
+                //    _repository.UpdateInventory(order2.StoreId, instruction.Key, instruction.Value);
+                //    _repository.Save();
+                //}
 
             }
-            _repository.AddNewOrder(order);
+            _repository.UpdateInventory(order);
+            //_repository.AddNewOrder(order);
             _repository.Save();
 
 

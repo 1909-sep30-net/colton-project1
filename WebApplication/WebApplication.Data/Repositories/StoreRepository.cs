@@ -130,7 +130,36 @@ namespace WebApplication.Data
         }
         public void UpdateInventory(InventoryItem inventoryItem)
         {
+            
+            //var loc = _dbContext.Location
+            //    .Where(x => x.LocationId == order.LocationId).FirstOrDefault();
 
+            //foreach (var item in order.itemsOrdered)
+            //{
+            //    //get the product ID based on the product name.
+            //    var prodId = _dbContext.Products
+            //        .Where(x => x.ProductName == item.Key).FirstOrDefault();
+
+            //    //locate the product in inventory based on LocationName and ProductId
+            //    var ord = _dbContext.Inventory
+            //        .Where(x => x.LocationName == loc.LocationName && x.ProductId == prodId.ProductId)
+            //        .FirstOrDefault();
+
+            //    try
+            //    {
+            //        //decrease the quantity of the product in inventory
+            //        ord.ProductQuantity -= item.Value;
+            //        _dbContext.SaveChanges();
+            //    }
+            //    catch (DbUpdateException ex)
+            //    {
+            //        Console.WriteLine(ex.Message);
+            //        Console.WriteLine("There was an error Adding your order. Please try again.");
+            //        _logger.LogInformation(ex, "Unable to save DecreaseInventory changes to DB");
+
+            //    }
+            //}
+            //return true;
             _dbContext.Inventory.Update(Mapper.MapInventoryItem(inventoryItem));
         }
 

@@ -24,11 +24,12 @@ namespace BLogic.Library.Interfaces
 
         public void AddNewOrder(WebApplication.BLogic.Library.Order _ord);
 
-        public void UpdateInventory(WebApplication.BLogic.Library.InventoryItem invent);
+        //public void UpdateInventory(WebApplication.BLogic.Library.InventoryItem invent);
 
         public void UpdateInventory(int storeId, int prodId, int quantity);
 
         public void UpdateOrderDetails(WebApplication.BLogic.Library.OrderDetails od);
+        public bool UpdateInventory(WebApplication.BLogic.Library.Order order);
 
         public void Save();
     }

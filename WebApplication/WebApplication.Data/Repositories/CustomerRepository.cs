@@ -136,11 +136,41 @@ namespace WebApplication.Data
             context.SaveChanges(); //Save DB
         }
 
-        public void UpdateInventory(WebApplication.BLogic.Library.InventoryItem invent)
+        public bool UpdateInventory(WebApplication.BLogic.Library.Order order)
         {
-            data.Inventory Invent = Mapper.MapInventoryItem(invent); //Takes in InventoryItem object and maps to Db
-            context.Update(Invent);
-            context.SaveChanges();
+            //data.Inventory Invent = Mapper.MapInventoryItem(invent); //Takes in InventoryItem object and maps to Db
+            //context.Update(Invent);
+            ////context.SaveChanges();
+            var loc = context.Location
+                    .Where(x => x.LocationId == order.LocationId).FirstOrDefault();
+
+            foreach (var item in order.cart)
+            {
+                
+                var prodId = context.Products
+                    .Where(x => x.Name == item.Key.Name).FirstOrDefault();
+
+                //locate the product in inventory based on LocationName and ProductId
+                var ord = context.Inventory
+                    .Where(x => x.Location.Address == loc.Address && x.ProductId == prodId.ProductId)
+                    .FirstOrDefault();
+
+                try
+                {
+                    //decrease the quantity of the product in inventory
+                    ord.Quantity -= item.Value;
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("There was an error Adding your order. Please try again.");
+                    //_logger.LogInformation(ex, "Unable to save DecreaseInventory changes to DB");
+
+                }
+            }
+            return true;
+
         }
 
         public void UpdateInventory(int storeId, int prodId, int quantity)
