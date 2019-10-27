@@ -6,11 +6,17 @@
 
 <h1>Place Order</h1>
 
-<form asp-action="PlaceOrder">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="SeeInventory">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+
+    </div>
     <div class="form-group">
         <input type='hidden' asp-for="CustomerId" value='@Model.CustomerId' />
+
+        <!--</input>-->
         <input type='hidden' asp-for="StoreId" value='@Model.StoreId' />
+
+        <!--</input>-->
         @for (int i = 0; i < Model.Inventory.Count(); i++)
         {
             <input type='hidden' asp-for="Inventory[i].InventoryId" value="@Model.Inventory[i].InventoryId" />
@@ -32,13 +38,14 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Inventory.First().Price)
                     </th>
+                    <!--
                     <th>
-                        @Html.DisplayNameFor(model => model.Inventory.First().ProductQuant)
+                        Html.DisplayNameFor(model => model.Inventory.First().ProductQuant)
                     </th>
+                        -->
                     <th>
                         @Html.DisplayNameFor(model => model.Inventory.First().MaxQuant)
                     </th>
-                    <th></th>
                 </tr>
             </thead>
 
@@ -55,7 +62,7 @@
                             <td>@Html.DisplayFor(model => Model.Inventory[i].Price)</td>
                             <td>@Html.DisplayFor(model => Model.Inventory[i].MaxQuant)</td>
                             <td>
-                                <input asp-for="Inventory[i].ProductQuant" class="from-control" min="0" max="@Model.Inventory[i].MaxQuant" />
+                                <input asp-for="Inventory[i].ProductQuant" class="form-control" min="0" max="@Model.Inventory[i].MaxQuant" />
                                 <span asp-validation-for="Inventory[i].ProductQuant" class="text-danger"></span>
                             </td>
 
@@ -78,6 +85,6 @@
         </table>
     </div>
     <div class="form-group">
-        <input asp-action="PlaceOrder3" type="submit" value="Submit Order" class="btn btn-primary" />
+        <input asp-action="SubmitOrder" type="submit" value="Submit Order" class="btn btn-primary" />
     </div>
 </form>

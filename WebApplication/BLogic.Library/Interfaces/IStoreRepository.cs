@@ -32,6 +32,8 @@ namespace WebApplication.BLogic.Library
         List<Customer> GetCustomerByName(string name);
         void UpdateInventory(InventoryItem inventoryItem);
 
+        public List<BLogic.Library.Location> GetAllStores();
+
         void Save();
 
         //void Save();

@@ -127,10 +127,10 @@ namespace WebApplication.Data
             return new Ent.Orders
             {
                 OrderId = order.Id,
-                LocationId = order.Location.Id,
-                CustomerId = order.Id,
+                LocationId = order.LocationId,
+                CustomerId = order.CustomerId,
                 OrderDetail = order.ProductSelected.Select(MapOrderDetails).ToList(),
-                OrderDateTime = order.OrderDateTime
+                OrderDateTime = order.OrderDateTime /*?? throw new ArgumentException("Argument cannot be null", nameof(order))*/,
 
 
 
@@ -153,17 +153,25 @@ namespace WebApplication.Data
         {
             return new lib.InventoryItem
             {
-                Product = Mapper.MapProduct(inventoryItem.Product),
+                InventoryId = inventoryItem.InventoryId,
+
+                ProductId = inventoryItem.ProductId,
+
                 Quantity = inventoryItem.Quantity,
-                Location = Mapper.MapLocation(inventoryItem.Location)
+
+                StoreId = inventoryItem.LocationId
+
+                //Product = Mapper.MapProduct(inventoryItem.Product),
+                //Quantity = inventoryItem.Quantity,
+                //Location = Mapper.MapLocation(inventoryItem.Location)
             };
         }
         public static Ent.Inventory MapInventoryItem(lib.InventoryItem inventoryItem)
         {
             return new Ent.Inventory
             {
-                ProductId = inventoryItem.Product.Id,
-                LocationId = inventoryItem.Location.Id,
+                ProductId = inventoryItem.ProductId,
+                LocationId = inventoryItem.StoreId,
 
                 Quantity = inventoryItem.Quantity,
 
@@ -176,9 +184,10 @@ namespace WebApplication.Data
         {
             return new lib.OrderDetails
             {
-                OrderDetailId = orderDetails.Order.Id,
-                ProductQuantity = (int)orderDetails.Quantity,
-                ProductId = Mapper.MapProduct(orderDetails.Product)
+                OrderDetailId = orderDetails.OrderId,
+                ProductQuantity = (int)orderDetails.ProductQuantity,
+                ProductId = orderDetails.ProductId,
+                OrderId = orderDetails.OrderId
             };
         }
         public static Ent.OrderDetail MapOrderDetails(lib.OrderDetails orderDetails)
@@ -193,20 +202,20 @@ namespace WebApplication.Data
 
             };
         }
-        public static lib.Product MapProduct(Ent.Product product)
+        public static lib.Product MapProduct(Ent.Products product)
         {
             return new lib.Product
             {
-                Id = product.Id,
+                Id = product.ProductId,
                 Name = product.Name,
-                Price = (double)product.Price
+                Price = product.Price
             };
         }
-        public static Ent.Product MapProduct(lib.Product product)
+        public static Ent.Products MapProduct(lib.Product product)
         {
-            return new Ent.Product
+            return new Ent.Products
             {
-                Id = product.Id,
+                ProductId = product.Id,
                 Name = product.Name,
                 Price = product.Price
 

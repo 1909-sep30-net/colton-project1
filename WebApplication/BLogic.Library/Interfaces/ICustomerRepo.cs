@@ -26,6 +26,10 @@ namespace BLogic.Library.Interfaces
 
         public void UpdateInventory(WebApplication.BLogic.Library.InventoryItem invent);
 
+        public void UpdateInventory(int storeId, int prodId, int quantity);
+
         public void UpdateOrderDetails(WebApplication.BLogic.Library.OrderDetails od);
+
+        public void Save();
     }
 }

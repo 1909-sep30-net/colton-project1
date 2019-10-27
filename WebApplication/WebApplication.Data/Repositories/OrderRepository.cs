@@ -6,23 +6,24 @@ using NLog;
 using Microsoft.EntityFrameworkCore;
 using BLogic.Library.Interfaces;
 using WebApplication.BLogic.Library;
+using data = WebApplication.Data.Entitis;
 
 namespace WebApplication.Data
 {
     public class OrderRepository : IOrderRepository
     {
-        private Project1Context context;
-        public static Project1Context GetContext()
+        private data.Project1Context context;
+        public static data.Project1Context GetContext()
         {
             string connectionString = SecretConfiguration.ConnectionString;
 
-            DbContextOptions<Project1Context> options = new DbContextOptionsBuilder<Project1Context>()
+            DbContextOptions<data.Project1Context> options = new DbContextOptionsBuilder<data.Project1Context>()
                 .UseSqlServer(connectionString)
                 .Options;
 
-            return new Project1Context(options);
+            return new data.Project1Context(options);
         }
-        public OrderRepository(Project1Context context)
+        public OrderRepository(data.Project1Context context)
         {
            
             this.context = context;
@@ -31,7 +32,7 @@ namespace WebApplication.Data
 
         public void AddNewOrder(Order _ord)
         {
-            Orders Ord = Mapper.MapOrders(_ord);
+            data.Orders Ord = Mapper.MapOrders(_ord);
             context.Add(Ord);
             context.SaveChanges();
         }

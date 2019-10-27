@@ -11,8 +11,10 @@ namespace WebApplication.BLogic.Library
         public Customer Customer { get; set; }
 
         public decimal Total { get; set; }
-        public int? LocationId { get; set; }
-        public int? CustomerId { get; set; }
+        public int LocationId { get; set; }
+        public int CustomerId { get; set; }
+
+        public Dictionary<Product, int> cart = new Dictionary<Product, int>();
         public DateTime OrderDateTime { get; set; }
 
         public List<OrderDetails> ProductSelected = new List<OrderDetails>();

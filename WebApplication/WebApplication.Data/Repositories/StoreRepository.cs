@@ -5,6 +5,7 @@ using WebApplication.Data;
 using NLog;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.BLogic.Library;
+using data = WebApplication.Data.Entitis;
 
 
 
@@ -16,12 +17,18 @@ namespace WebApplication.Data
         /// A repository for data access for store objects and their Locations/Addresses.
         /// </summary>
         //private readonly ICollection<Address> _data;
-        private readonly Project1Context _dbContext;
+        private readonly data.Project1Context _dbContext;
         private static readonly ILogger s_logger = LogManager.GetCurrentClassLogger();
 
+        public List<BLogic.Library.Location> GetAllStores()
+        {
+            IQueryable<data.Location> stores = _dbContext.Location
+                .AsNoTracking();
 
+            return stores.Select(Mapper.MapLocation).ToList();
+        }
 
-        public StoreRepository(Project1Context dbContext)
+        public StoreRepository(data.Project1Context dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
@@ -43,7 +50,7 @@ namespace WebApplication.Data
 
         public void AddCustomer(WebApplication.BLogic.Library.Customer customer)
         {
-            _dbContext.Customer.Add(Mapper.MapCustomer(customer));
+            _dbContext.Customers.Add(Mapper.MapCustomer(customer));
         }
 
         //public int GetCustomersIdByName(string FirstName, string LastName)
@@ -58,16 +65,16 @@ namespace WebApplication.Data
             return _dbContext.Orders
                  .Include(o => o.Customer)
                  .Include(o => o.Location)
-                 .Include(o => o.OrderDetails)
+                 .Include(o => o.OrderDetail)
                  .ThenInclude(od => od.Product)
-                 .Where(r => r.Location.Id.Equals(search))
+                 .Where(r => r.LocationId.Equals(search))
                  .Select(Mapper.MapOrders).ToList();
         }
 
         public List<BLogic.Library.Customer> GetCustomerByName(string search = null)
         {
 
-            return _dbContext.Customer
+            return _dbContext.Customers
 
                 .Where(r => r.FirstName.Contains(search))
                 .Select(Mapper.MapCustomer).ToList();
@@ -80,7 +87,7 @@ namespace WebApplication.Data
         }
         public List<BLogic.Library.Customer> GetAllCustomers()
         {
-            return _dbContext.Customer
+            return _dbContext.Customers
                     .Select(Mapper.MapCustomer).ToList();
         }
         public void AddOrder(Order order)
@@ -99,24 +106,24 @@ namespace WebApplication.Data
         }
         public List<BLogic.Library.Product> GetProducts()
         {
-            return _dbContext.Product
+            return _dbContext.Products
                 .Select(Mapper.MapProduct).ToList();
 
         }
         public List<BLogic.Library.Customer> GetCustomer(string FirstName, string LastName)
         {
-            return _dbContext.Customer
+            return _dbContext.Customers
                 .Where(o => o.FirstName == FirstName && o.LastName == LastName)
                 .Select(Mapper.MapCustomer).ToList();
         }
         public Dictionary<BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
         {
             using var context = GetContext();
-            List<Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
+            List<data.Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
             Dictionary<BLogic.Library.Product, int> keyValuePairs = new Dictionary<BLogic.Library.Product, int>();
-            foreach (Inventory item in getInventory)
+            foreach (data.Inventory item in getInventory)
             {
-                keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Product.Single(p => p.Id == item.ProductId).Name, Price = context.Product.Single(p => p.Id == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
+                keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Products.Single(p => p.ProductId == item.ProductId).Name, Price = context.Products.Single(p => p.ProductId == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
             }
             return keyValuePairs;
 
@@ -127,15 +134,15 @@ namespace WebApplication.Data
             _dbContext.Inventory.Update(Mapper.MapInventoryItem(inventoryItem));
         }
 
-        public static Project1Context GetContext()
+        public static data.Project1Context GetContext()
         {
             string connectionString = "Server=tcp:coltonclary0806.database.windows.net,1433;Initial Catalog=Project0;Persist Security Info=False;User ID=coltonclary0806;Password=Maplestaple1?;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30:";
 
-            DbContextOptions<Project1Context> options = new DbContextOptionsBuilder<Project1Context>()
+            DbContextOptions<data.Project1Context> options = new DbContextOptionsBuilder<data.Project1Context>()
                 .UseSqlServer(connectionString)
                 .Options;
 
-            return new Project1Context(options);
+            return new data.Project1Context(options);
         }
 
         public void Save()

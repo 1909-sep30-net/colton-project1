@@ -4,8 +4,9 @@ using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using  BL = WebApplication.BLogic.Library;
-using data = WebApplication.Data;
+using data = WebApplication.Data.Entitis;
 using BLogic.Library.Interfaces;
+using BLogic.Library;
 
 
 namespace WebApplication.Data
@@ -13,18 +14,18 @@ namespace WebApplication.Data
     public class CustomerRepository : ICustomerRepo
 
     {
-        private Project1Context context;
-        public static Project1Context GetContext()
+        private data.Project1Context context;
+        public static data.Project1Context GetContext()
         {
             string connectionString = SecretConfiguration.ConnectionString;
 
-            DbContextOptions<Project1Context> options = new DbContextOptionsBuilder<Project1Context>()
+            DbContextOptions<data.Project1Context> options = new DbContextOptionsBuilder<data.Project1Context>()
                 .UseSqlServer(connectionString)
                 .Options;
 
-            return new Project1Context(options);
+            return new data.Project1Context(options);
         }
-        public CustomerRepository(Project1Context context)
+        public CustomerRepository(data.Project1Context context)
         {
 
             this.context = context;
@@ -33,13 +34,13 @@ namespace WebApplication.Data
 
         public List<BLogic.Library.Customer> GetCustomerByFirstName(string firstname)
 
-              => context.Customer.Select(Mapper.MapCustomer).Where(c => c.FirstName == firstname).ToList();
+              => context.Customers.Select(Mapper.MapCustomer).Where(c => c.FirstName == firstname).ToList();
 
 
 
         public void AddNewCustomer(WebApplication.BLogic.Library.Customer customer)
         {
-            Customer Cust = Mapper.MapCustomer(customer);
+            data.Customers Cust = Mapper.MapCustomer(customer);
             context.Add(Cust);
             context.SaveChanges();
         }
@@ -51,13 +52,13 @@ namespace WebApplication.Data
 
         public List<WebApplication.BLogic.Library.Customer> GetAllCustomers()
         {
-            IQueryable<Data.Customer> customers = context .Customer
+            IQueryable<data.Customers> customers = context.Customers
                 .AsNoTracking();
 
             return customers.Select(Mapper.MapCustomer).ToList();
 
-        }
-        public Customer GetCustomerByFirstName()
+        }   
+        public BL.Customer GetCustomerByFirstName()
         {
             throw new NotImplementedException();
         }
@@ -70,7 +71,7 @@ namespace WebApplication.Data
 
         public List<BL.Location> GetAllStores()
         {
-            IQueryable<Data.Location> stores = context.Location
+            IQueryable<data.Location> stores = context.Location
                 .AsNoTracking();
 
             return stores.Select(Mapper.MapLocation).ToList();
@@ -99,35 +100,70 @@ namespace WebApplication.Data
         //}
         public Dictionary<BLogic.Library.Product, int> GetInventoryByStoreId(int storeId)
         {
+            //using var context = GetContext();
+            //List<data.Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
+            //Dictionary<BLogic.Library.Product, int> keyValuePairs = new Dictionary<BLogic.Library.Product, int>();
+            //foreach (data.Inventory item in getInventory)
+            //{
+            //    keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Products.Single(p => p.ProductId == item.ProductId).Name, Price = context.Products.Single(p => p.ProductId == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
+            //}
+            //return keyValuePairs;
+
             using var context = GetContext();
-            List<Inventory> getInventory = context.Inventory.Where(i => i.LocationId == storeId).ToList();
-            Dictionary<BLogic.Library.Product, int> keyValuePairs = new Dictionary<BLogic.Library.Product, int>();
-            foreach (Inventory item in getInventory)
+            List<WebApplication.Data.Entitis.Inventory> getInvent = context.Inventory.Where(i => i.LocationId == storeId).ToList();
+                                                                
+            Dictionary<WebApplication.BLogic.Library.Product, int> DictOfProductsAndPrices = new Dictionary<WebApplication.BLogic.Library.Product, int>();
+            foreach (WebApplication.Data.Entitis.Inventory item in getInvent)
             {
-                keyValuePairs.Add(new BLogic.Library.Product() { Name = context.Product.Single(p => p.Id == item.ProductId).Name, Price = context.Product.Single(p => p.Id == item.ProductId).Price, Id = item.ProductId }, (int)item.Quantity);
+                DictOfProductsAndPrices.Add(new WebApplication.BLogic.Library.Product()
+                {
+                    InventoryId = item.InventoryId,
+                    Name = context.Products.Single(p => p.ProductId == item.ProductId).Name,
+                    Price = context.Products.Single(p => p.ProductId == item.ProductId).Price,
+                    Id = item.ProductId
+                },
+                    (int)item.Quantity);
             }
-            return keyValuePairs;
+            return DictOfProductsAndPrices;
 
         }
 
         public void AddNewOrder(WebApplication.BLogic.Library.Order _ord)
         {
-            Orders Ord = Mapper.MapOrders(_ord); //Take in Order Object and mapp to DB
+            data.Orders Ord = Mapper.MapOrders(_ord); //Take in Order Object and mapp to DB
+            Ord.OrderId = 0;
             context.Add(Ord); // Add to DB
             context.SaveChanges(); //Save DB
         }
 
         public void UpdateInventory(WebApplication.BLogic.Library.InventoryItem invent)
         {
-            Data.Inventory Invent = Mapper.MapInventoryItem(invent); //Takes in InventoryItem object and maps to Db
+            data.Inventory Invent = Mapper.MapInventoryItem(invent); //Takes in InventoryItem object and maps to Db
             context.Update(Invent);
             context.SaveChanges();
         }
 
+        public void UpdateInventory(int storeId, int prodId, int quantity)
+        {
+            var Invent = context.Location.Find(storeId);
+            foreach(var item in Invent.Inventory)
+            {
+                if(item.ProductId == prodId)
+                {
+                    item.Quantity -= quantity;
+                }
+            }
+        }
+
         public void UpdateOrderDetails(WebApplication.BLogic.Library.OrderDetails od)
         {
-            Data.OrderDetails Od = Mapper.MapOrderDetails(od);
+            data.OrderDetail Od = Mapper.MapOrderDetails(od);
             context.Update(Od);
+            context.SaveChanges();
+        }
+
+        public void Save()
+        {
             context.SaveChanges();
         }
     }

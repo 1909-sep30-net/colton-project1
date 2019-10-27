@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Data;
+using data = WebApplication.Data.Entitis;
 
 namespace WebApplication.Data.Migrations
 {
-    [DbContext(typeof(Project1Context))]
+    [DbContext(typeof(data.Project1Context))]
     partial class Project1ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

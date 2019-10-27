@@ -23,11 +23,11 @@ namespace WebApplication.Controllers
 
             List<OrderViewModel> orderViewModels = orders.Select(o => new OrderViewModel //List of OrderViewModels to fill in on View
             {
-                CustomerId = o.CustomerId ?? throw new ArgumentException("Argument cannot be null", nameof(orders)),
+                CustomerId = o.CustomerId/* ?? throw new ArgumentException("Argument cannot be null", nameof(orders))*/,
                 OrderId = o.Id,
-                OrderDate = o.OrderDateTime ?? throw new ArgumentException("Argument cannot be null", nameof(orders)),
+                OrderDate = o.OrderDateTime /*?? throw new ArgumentException("Argument cannot be null", nameof(orders))*/,
                 Total = o.Total,
-                StoreId = o.LocationId ?? throw new ArgumentException("Argument cannot be null", nameof(orders)),
+                StoreId = o.LocationId /*?? throw new ArgumentException("Argument cannot be null", nameof(orders))*/,
             }).ToList();
 
             return View("CustomerOrders", orderViewModels); //returns View with string and List of Models

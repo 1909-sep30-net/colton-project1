@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Data;
+using data = WebApplication.Data.Entitis;
 
 namespace WebApplication.Data.Migrations
 {
-    [DbContext(typeof(Project1Context))]
+    [DbContext(typeof(data.Project1Context))]
     [Migration("20191022141848_WebApplication")]
     partial class WebApplication
     {

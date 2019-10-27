@@ -174,7 +174,7 @@ namespace WebApplication.Controllers
         {
             Dictionary<BLogic.Library.Product, int> dic2 = _repository.GetInventoryByStoreId(orderViewModel.StoreId); //Dictionary of Products and ints, filled in from Repository and passed StoreId of OrderViewModel
 
-            SeeInventoryViewModel seeInventory = new SeeInventoryViewModel
+            SeeInventoryViewModel seeInventoryVM = new SeeInventoryViewModel
             {
                 CustomerId = orderViewModel.CustomerId,
                 StoreId = orderViewModel.StoreId,
@@ -184,68 +184,82 @@ namespace WebApplication.Controllers
                     Name = d.Key.Name,
                     Price = d.Key.Price,
                     ProductId = d.Key.Id,
-                    ProductQuant = 0,
+                    //ProductQuant = 0,
                     MaxQuant = d.Value,
                     InventoryId = d.Key.InventoryId,
 
                 }).ToList()
             };
-            return View(seeInventory);
+            return View(seeInventoryVM);
         }
 
-        //public ActionResult PlaceOrder3(Order2ViewModel order2)
-        //{
+        public ActionResult SubmitOrder(SeeInventoryViewModel order2)
+        {
+            var inventoryBeforeChange = _repository.GetInventoryByStoreId(order2.StoreId);
+
+            var instructions = new Dictionary<int, int> { };
+
+            BLogic.Library.Order order = new BLogic.Library.Order
+            {
+                CustomerId = order2.CustomerId,
+                LocationId = order2.StoreId,
+                OrderDateTime = DateTime.Now,
+                cart = new Dictionary<BLogic.Library.Product, int>()
+
+            };
+            foreach (var item in order2.Inventory)
+            {
+                if (item.ProductQuant != 0)
+                {
+                    BLogic.Library.Product product = new BLogic.Library.Product
+                    {
+                        Id = item.ProductId,
+                        Name = item.Name,
+                        Price = item.Price
+                    };
+
+                    BLogic.Library.OrderDetails orderDet = new BLogic.Library.OrderDetails
+                    {
+                        OrderDetailId = 0, 
+                        ProductId = item.ProductId,
+                        ProductQuantity = item.ProductQuant
+                    };
+
+                    order.ProductSelected.Add(orderDet);
+
+                    foreach(var invItem in inventoryBeforeChange)
+                    {
+                        if(invItem.Key.Id == item.ProductId)
+                        {
+                            instructions.Add(invItem.Key.Id, item.ProductQuant);
+                            break;
+                        }
+                    }
+
+                   //BLogic.Library.InventoryItem inv = new BLogic.Library.InventoryItem
+                   // {
+                   //     InventoryId = item.InventoryId,
+                   //     StoreId = order2.StoreId,
+                   //     ProductId = item.ProductId,
+                   //     Quantity = item.MaxQuant - item.ProductQuant
+                   // };
+
+
+                    order.cart[product] = item.ProductQuant;
+                }
+                foreach (var instruction in instructions)
+                {
+                    _repository.UpdateInventory(order2.StoreId, instruction.Key, instruction.Value);
+                }
+
+            }
+            _repository.AddNewOrder(order);
+            _repository.Save();
 
 
 
-        //    Order order = new Order
-        //    {
-        //        CustomerId = order2.CustomerId,
-        //        StoreId = order2.StoreId,
-        //        DateOfOrder = DateTime.Now,
-        //        cart = new Dictionary<Product, int>()
-
-        //    };
-        //    foreach (var item in order2.Inventory)
-        //    {
-        //        if (item.ProductQuant != 0)
-        //        {
-        //            Product product = new Product
-        //            {
-        //                ProductId = item.ProductId,
-        //                Name = item.Name,
-        //                Price = item.Price
-        //            };
-
-        //            OrderDetails taco = new OrderDetails
-        //            {
-        //                OrderDeatailId = 0,
-        //                ProductId = item.ProductId,
-        //                ProductQuant = item.ProductQuant,
-        //            };
-
-        //            order.ProductOrdered.Add(taco);
-
-        //            BusinessLogic.Inventory inv = new BusinessLogic.Inventory
-        //            {
-        //                InventoryId = item.InventoryId,
-        //                StoreId = order2.StoreId,
-        //                ProductId = item.ProductId,
-        //                Quantity = item.MaxQuant - item.ProductQuant
-        //            };
-
-        //            _repository.UpdateInventory(inv);
-
-        //            order.cart[product] = item.ProductQuant;
-        //        }
-
-        //    }
-        //    _repository.AddNewOrder(order);
-
-
-
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

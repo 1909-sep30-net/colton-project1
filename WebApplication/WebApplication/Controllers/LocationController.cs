@@ -4,12 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication.BLogic.Library;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
     public class LocationController : Controller
     {
+        private readonly IStoreRepository _repository;
+        public LocationController(IStoreRepository repository)
+        {
+            _repository = repository;
+        }
         // GET: Location
+        public ActionResult Stores()
+        {
+            IEnumerable<BLogic.Library.Location> store = _repository.GetAllStores();
+
+            var viewModel = store.Select(s => new LocationViewModel
+            {
+                Id = s.Id,
+                City = s.Address
+            });
+
+            return View(viewModel);
+        }
         public ActionResult Index()
         {
             return View();

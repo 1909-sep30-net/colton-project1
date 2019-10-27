@@ -8,27 +8,37 @@
 <h4>Choose Your Store Location</h4>
 
 
-<hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="PlaceOrder">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+
+            </div>
             <div class="form-group">
                 <div class="dropdown">
-                    <input type='hidden' asp-for="CustomerId" value='@Model.CustomerId' />
-                    <label asp-for="StoreId" class="control-label"></label>
+                    <input type='hidden' asp-for="CustomerId" value='@Model.CustomerId'> 
+                <!--</input>-->
+                    <label asp-for="StoreId" class="control-label">
+
+                    </label>
                     <select asp-for="StoreId">
                         @foreach (var s in Model.AllStores)
                         {
-                            <option value="@s.Id">@s.Id @s.City</option>
+                            <option value="@s.Id">
+                                @s.Id @s.City
+                            </option>
                         }
                     </select>
-                    <span asp-validation-for="StoreId" class="text-danger"></span>
+                    <span asp-validation-for="StoreId" class="text-danger">
+
+                    </span>
                 </div>
             </div>
 
             <div class="form-group">
                 <input asp-action="SeeInventory" type="submit" value="See Inventory" class="btn btn-primary" />
+                <!--</input>-->
             </div>
         </form>
     </div>

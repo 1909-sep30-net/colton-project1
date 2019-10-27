@@ -20,10 +20,10 @@ namespace WebApplication.BLogic.Library
             get => _fname;
             set
             {
-                if (value.Length == 0)
-                {
-                    throw new ArgumentException("First Name must not be empty", nameof(value));
-                }
+                //if (value.Length == 0)
+                //{
+                //    throw new ArgumentException("First Name must not be empty", nameof(value));
+                //}
                 _fname = value;
             }
         }
@@ -32,10 +32,10 @@ namespace WebApplication.BLogic.Library
             get => _lname;
             set
             {
-                if (value.Length == 0)
-                {
-                    throw new ArgumentException("Last Name must not be empty", nameof(value));
-                }
+                //if (value.Length == 0)
+                //{
+                //    throw new ArgumentException("Last Name must not be empty", nameof(value));
+                //}
                 _lname = value;
             }
         }

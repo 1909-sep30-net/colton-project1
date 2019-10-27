@@ -13,25 +13,20 @@ namespace WebApplication.Models
         [Required]
         public int CustomerId { get; set; }
 
-        [DisplayName("Order ID")]
-        [Required]
-        public int OrderId { get; set; }
-
-        [DisplayName("Order Date")]
-        [Required]
-        public DateTime OrderDate { get; set; }
-
-        [DisplayName("Order Total")]
-        [Required]
-        public double Total { get; set; }
-
         [DisplayName("Store ID")]
         [Required]
         public int StoreId { get; set; }
 
         public List<LocationViewModel> AllStores;
 
-        public List<ProductViewModel> Inventory;
+        [DisplayName("Order ID")]
+        public int OrderId { get; set; }
+
+        [DisplayName("Order Date")]
+        public DateTime OrderDate { get; set; }
+
+        public decimal Total { get; set; }
+
 
     }
 }

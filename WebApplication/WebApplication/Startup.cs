@@ -12,7 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Data;
 using WebApplication.BLogic.Library;
-using BLogic.Library.Interfaces; 
+using BLogic.Library.Interfaces;
+using data = WebApplication.Data.Entitis;
 
 
 namespace WebApplication
@@ -33,7 +34,7 @@ namespace WebApplication
 
             string connectionString = Configuration.GetConnectionString("Colton");
 
-            services.AddDbContext<Project1Context>(options =>
+            services.AddDbContext<data.Project1Context>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
