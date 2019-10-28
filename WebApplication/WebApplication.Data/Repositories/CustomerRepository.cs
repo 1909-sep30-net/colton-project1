@@ -173,6 +173,18 @@ namespace WebApplication.Data
 
         }
 
+        public List<WebApplication.BLogic.Library.Order> GetCustomerOrdersById(int customerId)
+        {
+            List<WebApplication.BLogic.Library.Order> orders = new List<WebApplication.BLogic.Library.Order>();
+            var customer = context.Customers.Find(customerId);
+            foreach(var item in customer.Orders)
+            {
+                orders.Add(Mapper.MapOrders(item));
+
+            }
+            return orders;
+                
+        }
         public void UpdateInventory(int storeId, int prodId, int quantity)
         {
             var Invent = context.Location.Find(storeId);

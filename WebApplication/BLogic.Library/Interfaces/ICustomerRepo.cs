@@ -31,6 +31,7 @@ namespace BLogic.Library.Interfaces
         public void UpdateOrderDetails(WebApplication.BLogic.Library.OrderDetails od);
         public bool UpdateInventory(WebApplication.BLogic.Library.Order order);
 
+        public List<WebApplication.BLogic.Library.Order> GetCustomerOrdersById(int customerId);
         public void Save();
     }
 }

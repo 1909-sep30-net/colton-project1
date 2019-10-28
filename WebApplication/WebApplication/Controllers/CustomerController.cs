@@ -192,7 +192,28 @@ namespace WebApplication.Controllers
             };
             return View(seeInventoryVM);
         }
+        
+        public ActionResult CustomerOrders(int id)
+        {
+            List<BLogic.Library.Order> orders = _repository.GetOrdersByCustId(id);
+            
+            CustomerOrdersViewModel cust = new CustomerOrdersViewModel()
+            {
+                CustomerId = id,
+                Orders = orders.Select(d => new OrderViewModel
+                {
+                    OrderId = d.Id,
+                    CustomerId = d.CustomerId,
+                    OrderDate = d.OrderDateTime,
+                    Total = d.Total,
+                    StoreId = d.LocationId
 
+
+                }).ToList()
+            };
+
+            return View(cust);
+        }
         public ActionResult SubmitOrder(SeeInventoryViewModel order2)
         {
             var inventoryBeforeChange = _repository.GetInventoryByStoreId(order2.StoreId);
@@ -232,7 +253,7 @@ namespace WebApplication.Controllers
                     order.cart[product] = item.ProductQuant;
                     foreach(var product2 in order.cart)
                     {
-                        order.Total += (product2.Key.Price) * (product2.Value);
+                        order.Total += (double)((product2.Key.Price) * (product2.Value));
                     }
                 }
 
@@ -247,31 +268,27 @@ namespace WebApplication.Controllers
             TempData["OrderId"] = order.Id;
            
             
-            //TempData["Total"] = order.Total;
+            TempData["Total"] = (int)order.Total;
 
 
+
+           // TempData.Keep();
+            //return View(thankYouViewModel);
+           return RedirectToAction(nameof(ThankYou));//instead of redirecting to Index, we want a view that shows OrderDetails
+        }
+        public ActionResult ThankYou()
+        {
             ThankYouViewModel thankYouViewModel = new ThankYouViewModel
             {
-                CustomerId = order.CustomerId,
-                StoreId = order.LocationId,
-                OrderId = order.Id,
-                OrderDate = order.OrderDateTime,
-                Total = order.Total
-
+                CustomerId = Convert.ToInt32(TempData["CustId"]),
+                StoreId = Convert.ToInt32(TempData["LocationId"]),
+                OrderId = Convert.ToInt32(TempData["OrderId"]),
+                OrderDate = DateTime.Now,
+                Total = Convert.ToInt32(TempData["Total"])
             };
 
             return View(thankYouViewModel);
-            //return RedirectToAction(nameof(Index));//instead of redirecting to Index, we want a view that shows OrderDetails
-        }
-        public ActionResult ThankYou(ThankYouViewModel thankYou)
-        {
-            thankYou.CustomerId = Convert.ToInt32(TempData["CustId"]);
-            thankYou.StoreId = Convert.ToInt32(TempData["LocationId"]);
-            thankYou.OrderId = Convert.ToInt32(TempData["OrderId"]);
-            thankYou.OrderDate = DateTime.Now;//Convert.ToDateTime(TempData["OrderDate"]);
-            //thankYou.Total = Convert.ToInt32(TempData["Total"]);
 
-            return View(thankYou);
         }
     }
 }

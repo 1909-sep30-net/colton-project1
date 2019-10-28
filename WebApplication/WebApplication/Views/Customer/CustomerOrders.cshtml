@@ -1,0 +1,82 @@
+﻿@model CustomerOrdersViewModel
+@{
+    ViewData["Title"] = "CustomerOrders";
+}
+
+<h1>CustomerOrders</h1>
+
+<form asp-action="CustomerOrders">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+
+    </div>
+    <div class="form-group">
+        <input type='hidden' asp-for="CustomerId" value='@Model.CustomerId' />
+
+        <!--</input>-->
+        <input type='hidden' asp-for="StoreId" value='@Model.StoreId' />
+
+        <!--</input>-->
+        @for (int i = 0; i < Model.Orders.Count(); i++)
+        {
+            <input type='hidden' asp-for="Orders[i].CustomerId" value="@Model.Orders[i].CustomerId" />
+            <input type='hidden' asp-for="Orders[i].OrderId" value="@Model.Orders[i].OrderId" />
+            <input type='hidden' asp-for="Orders[i].OrderDate" value="@Model.Orders[i].OrderDate" />
+            <input type='hidden' asp-for="Orders[i].StoreId" value="@Model.Orders[i].StoreId" />
+            
+        }
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Orders.First().CustomerId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Orders.First().OrderId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Orders.First().OrderDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Orders.First().StoreId)
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model.Orders != null)
+                {
+
+                    @for (int i = 0; i < Model.Orders.Count(); i++)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(model => Model.Orders[i].CustomerId)</td>
+                            <td>@Html.DisplayFor(model => Model.Orders[i].OrderId)</td>
+                            <td>@Html.DisplayFor(model => Model.Orders[i].OrderDate)</td>
+                            <td>@Html.DisplayFor(model => Model.Orders[i].StoreId)</td>
+
+
+                        </tr>
+
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>Please select location first.</td>
+                    </tr>
+
+                }
+
+
+
+            </tbody>
+
+        </table>
+    </div>
+    <div class="form-group">
+        <input asp-action="CustomerOrders" type="submit" value="Submit Order" class="btn btn-primary" />
+    </div>
+</form>
